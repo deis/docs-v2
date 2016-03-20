@@ -63,7 +63,7 @@ pages:
     # FIXME (bacongobbler): our custom deis theme only supports a toctree depth of 2 due to css issues
     - Controller API v2.0: reference-guide/controller-api/v2.0.md
   - FAQ: faq.md
-theme_dir: themes/deis
+theme_dir: themes/deis.com
 docs_dir: src
 markdown_extensions:
   - markdown_checklist.extension
