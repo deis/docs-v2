@@ -90,4 +90,4 @@ extra_javascript:
   - static/js/adjustments.js
   - static/js/bootstrap.min.js
   - static/js/checkURL.js
-google_analytics: ['UA-42867143-1', 'deis.io']
+google_analytics: ['UA-42867143-3', 'auto']
