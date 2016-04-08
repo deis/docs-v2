@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>{% if page_title %}{{ page_title }} - {% endif %}{{ site_name }}</title>
+  <meta name="description" content="{{ page_description if page_description }}" />
+  <meta name="keywords" content="{{ meta['keywords'] if meta }}" />
+
+  <link rel="stylesheet" href="{{ base_url }}/css/app.css" />
+  <link rel="canonical" href="https://docs-v2.readthedocs.org/" />
+
+  <link rel="shortcut icon" href="{{ base_url }}/images/favicon.ico" />
+  <link rel="icon" type="image/png" href="{{ base_url }}/images/favicon.png" />
+</head>
+
+<body>
+
+  <div class="off-canvas-wrap" data-offcanvas>
+    <div class="inner-wrap">
+
+      <aside class="right-off-canvas-menu">
+        <ul>
+        {% for nav_item in nav %}
+          {% if nav_item.children %}
+            <li>{{ nav_item.title }}
+              <ul>
+              {% for nav_item in nav_item.children %}
+                <li class="{% if nav_item.active%}current{%endif%}">
+                  <a href="{{ nav_item.url }}">{{ nav_item.title }}</a>
+                </li>
+              {% endfor %}
+              </ul>
+            </li>
+          {% else %}
+            <li class="{% if nav_item.active%}current{%endif%}">
+              <a href="{{ nav_item.url }}">{{ nav_item.title }}</a>
+             </li>
+          {% endif %}
+        {% endfor %}
+        </ul>
+      </aside>
+
+      <section class="main-section">
+          <div class="navbar top-bar" data-purpose="navbar">
+  <div class="row">
+    <div class="small-6 large-2 columns">
+      <h1><a href="/" class="logo"><img src="/images/svg/logo.svg" alt="Deis"></a></h1>
+    </div>
+    <div class="small-4 large-9 columns">
+
+      <nav class="nav navbar-nav navbar-right">
+        <a href="https://github.com/deis/workflow/" id="header-get-started" class="button hollow small right show-for-large-up">Get Started</a>
+
+        <a class="right-off-canvas-toggle fa fa-bars show-for-medium-down" href="#" data-proofer-ignore></a>
+
+        <ul class="inline-list hide-for-medium-down">
+          <li>
+            <a href="/how-it-works" id="header-hiw" class="item " title="How It Works">How It Works</a>
+          </li>
+          <li>
+            <a href="/why-deis" id="header-why-deis" class="item " title="Why Use Deis">Why Use Deis</a>
+          </li>
+          <li>
+            <a href="/services" id="header-services" class="item " title="Support &amp; Services">Support &amp; Services</a>
+          </li>
+          <li>
+            <a href="/community" id="header-community" class="item" title="Community">Community</a>
+          </li>
+          <li>
+            <a href="/blog" id="header-blog" class="item " title="Blog">Blog</a>
+          </li>
+        </ul>
+      </nav>
+
+    </div>
+  </div>
+</div>
+
+<div id="deis-home">
+  <section class="panel panel--why">
+    <div class="row">
+      <div class="small-12 columns">
+        {{ content }}
+      </div>
+    </div>
+  </section>
+</div>
+
+          <footer>
+  <section class="panel -gray panel-newsletter">
+    <div class="row">
+      <div class="show-for-large-up large-6 columns subscribe">
+
+        <div id="mc_embed_signup">
+          <form action="//deis.us2.list-manage.com/subscribe/post?u=2ad6b6ca7910248391eaa8751&amp;id=9342c8c944" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+            <div id="mc_embed_signup_scroll">
+              <div class="mc-field-group">
+                <label for="mce-EMAIL">Subscribe to our newsletter</label>
+                <input type="text" value="" name="EMAIL" class="required email" id="mce-EMAIL" placeholder="Subscribe to our newsletter">
+              </div>
+              <div id="mce-responses" class="clear">
+                <div class="response" id="mce-error-response" style="display:none"></div>
+                <div class="response" id="mce-success-response" style="display:none"></div>
+              </div>
+
+              <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+              <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_5e404606794b4dac9cd4667c8_2706763c5b" tabindex="-1" value=""></div>
+              <div class="clear"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
+            </div>
+          </form>
+        </div>
+
+        <script type='text/javascript' src='//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js'></script><script type='text/javascript'>(function($) {window.fnames = new Array(); window.ftypes = new Array();fnames[0]='EMAIL';ftypes[0]='email';fnames[1]='FNAME';ftypes[1]='text';fnames[2]='LNAME';ftypes[2]='text';}(jQuery));var $mcj = jQuery.noConflict(true);</script>
+        <!--End mc_embed_signup-->
+
+      </div>
+      <div class="small-12 small-text-center large-only-text-right large-6 columns social">
+        <nav class="">
+          <a id="footer-twitter" class="fa fa-twitter" title="Deis on Twitter" href="https://twitter.com/opendeis" target="_blank"></a>
+          <a id="footer-so" class="fa fa-stack-overflow" title="Deis on StackOverflow" href="http://stackoverflow.com/questions/tagged/deis?sort=active" target="_blank"></a>
+          <a id="footer-gh" class="fa fa-github" title="Deis on Github" href="https://github.com/deis/deis" target="_blank"></a>
+          <a id="footer-slack" class="fa fa-slack" title="Deis Slack Channel" href="https://slack.deis.io/" target="_blank"></a>
+          <a id="footer-contact-email" class="fa fa-envelope" title="Contact us via email" href="mailto:services@deis.com?Subject=Website%20contact" target="_blank"></a>
+        </nav>
+      </div>
+    </div>
+  </section>
+  <section class="panel panel-links">
+    <div class="row">
+      <div class="small-4 small-only-text-center large-6 columns logo-and-copyright">
+        <div class="logo">
+          <a id="footer-return" href="/"><img src="/images/svg/footer-logo.svg" alt="Deis"></a>
+        </div>
+        <p class="copyright show-for-medium-up">
+          <a id="footer-privacy" href="/policies/privacy">Privacy Policy</a>
+        </p>
+        <p class="copyright show-for-medium-up">Deis.com and the Deis project are maintained by <a href="https://engineyard.com/"><img src="/images/svg/footer-engine-yard.svg" alt="Engine Yard"></a></p>
+      </div>
+      <div class="small-8 large-6 columns">
+        <dl>
+          <dt><a id="footer-gh-community" href="https://github.com/deis/workflow">Deis Community</a></dt>
+          <dd><a id="footer-get-involved" href="https://deis.com/community">Get Involved</a></dd>
+          <dd><a id="footer-videos-events" href="https://deis.com/community">Videos &amp; Events</a></dd>
+          <dd><a id="footer-roadmap" href="/roadmap/roadmap/">Project Roadmap</a></dd>
+        </dl>
+        <dl>
+          <dt><a id="footer-docs" href="/">Docs</a></dt>
+          <dd><a id="footer-installing" href="/installing-workflow/installing-deis-workflow/">Installing Workflow</a></dd>
+          <dd><a id="footer-architecture" href="/understanding-workflow/architecture/">Architecture</a></dd>
+          <dd><a id="footer-faq" href="/faq/">FAQ</a></dd>
+        </dl>
+        <dl>
+          <dt><a id="footer-services" href="https://deis.com/services">Services</a></dt>
+          <dd><a id="footer-support-plans" href="https://deis.com/services#support">Support Plans</a></dd>
+          <dd><a id="footer-pro-serv" href="https://deis.com/services">Pro Services</a></dd>
+        </dl>
+        <dl>
+          <dt><a id="footer-company" href="https://deis.com/about">Company</a></dt>
+          <dd><a id="footer-about" href="https://deis.com/about">About</a></dd>
+          <dd><a id="footer-careers" href="https://deis.com/careers">Careers</a></dd>
+          <dd><a id="footer-contact" href="https://deis.com/about#contact">Contact</a></dd>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <script src="{{ base_url }}/javascripts/jquery.min.js"></script>
+  <script src="{{ base_url }}/javascripts/foundation.js"></script>
+  <script src="{{ base_url }}/javascripts/foundation.reveal.js"></script>
+  <script src="{{ base_url }}/javascripts/foundation.offcanvas.js"></script>
+  <script src="{{ base_url }}/javascripts/foundation.orbit.js"></script>
+  <script src="{{ base_url }}/javascripts/typed.min.js"></script>
+  <script src="{{ base_url }}/javascripts/headroom.min.js"></script>
+  <script src="{{ base_url }}/javascripts/ga.js"></script>
+  <script src="{{ base_url }}/javascripts/ui.js"></script>
+  <script src='{{ base_url }}/javascripts/home.js' type="text/javascript"></script>
+
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-42867143-3', 'auto');
+    ga('require', 'linkid');
+    ga('send', 'pageview');
+  </script>
+</footer>
+
+        </section>
+
+        <a class="exit-off-canvas" data-proofer-ignore></a>
+      </div>
+    </div>
+
+</body>
+</html>
