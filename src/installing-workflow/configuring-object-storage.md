@@ -24,7 +24,7 @@ Every Deis component that relies on object storage relies on the following two i
 - An environment variable that describe what object storage system to use.
 - A configuration file ([objectstorage.toml][objectstorage-toml]) to provide access credentials for the object storage system.
 	- We suggest storing the contents of these files in [Kubernetes secrets][k8s-secret] and mounting them as volumes to each pod.
-	- See [the workflow-dev chart](https://github.com/deis/charts/tree/master/workflow-dev) for examples of using and mounting secrets.
+	- See [the workflow-beta1 chart](https://github.com/deis/charts/tree/master/workflow-beta1) for examples of using and mounting secrets.
 
 The subsections herein explain how to configure these two inputs for each applicable component.
 
@@ -132,8 +132,8 @@ The database reads the credential information from a `objectstorage-keyfile` sec
 If you are using the [Helm Chart for Workflow][helm-chart], put your credentials in the [objectstorage.toml][objectstorage-toml] file before you run `helm generate`. Note that you don't need to base64-encode the credentials, as Helm will do that for you. For more information, see the [installation instructions][helm-install] for more details on using Helm.
 
 
-[helm-chart]: https://github.com/deis/charts/tree/master/workflow-dev
-[minio-user-secret]: https://github.com/deis/charts/blob/master/workflow-dev/manifests/deis-minio-secret-user.yaml
+[helm-chart]: https://github.com/deis/charts/tree/master/workflow-beta1
+[minio-user-secret]: https://github.com/deis/charts/blob/master/workflow-beta1/manifests/deis-minio-secret-user.yaml
 [helm-install]: https://github.com/deis/workflow/blob/master/src/installing-workflow/installing-deis-workflow.md
 [objectstorage-toml]: https://github.com/deis/charts/blob/master/workflow-dev/tpl/objectstorage.toml
 [k8s-service]: http://kubernetes.io/docs/user-guide/services/
