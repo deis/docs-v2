@@ -65,6 +65,14 @@ $ kubectl get pods --namespace=deis -w
 
 Once you see all of the pods in the `READY` state, Deis Workflow is up and running!
 
+## AWS EC2 Install Notes
+For clusters running on AWS EC2 you may need to increase the idle timeout of the loadbalancer that is in front of deis-router, to do that, first describe deis-router service to find out what ELB it is using:
+```
+$ kubectl describe service deis-router --namespace=deis
+```
+
+The load balancer will be described in the field "LoadBalancer Ingress", then, in aws cli tool or through EC2 Management Console, increase the idle timeout of the ELB from 60 seconds to 1200.
+
 Next, [configure dns][] so you can register your first user.
 
 [helm]: http://helm.sh
