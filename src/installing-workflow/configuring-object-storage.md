@@ -22,7 +22,7 @@ In our beta release, the components listed above are configured by default to au
 Every Deis component that relies on object storage relies on the following two inputs for configuration:
 
 - An environment variable that describe what object storage system to use.
-- A configuration file ([objectstorage.toml][objectstorage-toml]) to provide access credentials for the object storage system.
+- A configuration file ([generate_params.toml][generate_params]) to provide access credentials for the object storage system.
 	- We suggest storing the contents of these files in [Kubernetes secrets][k8s-secret] and mounting them as volumes to each pod.
 	- See [the workflow-dev chart](https://github.com/deis/charts/tree/master/workflow-dev) for examples of using and mounting secrets.
 
@@ -36,11 +36,11 @@ The builder looks for a `BUILDER_STORAGE` environment variable, which it then us
 
 ### Credentials
 
-The builder reads the credential information from a `objectstorage-keyfile` secret. This is generated automatically (as part of the `helm generate` command) based on the configuration options given in the [objectstorage.toml file][objectstorage-toml] file.
+The builder reads the credential information from a `objectstorage-keyfile` secret. This is generated automatically (as part of the `helm generate` command) based on the configuration options given in the [generate_params.toml file][generate_params] file.
 
 ### Helm Chart
 
-If you are using the [Helm Chart for Workflow][helm-chart], put your credentials in the [objectstorage.toml][objectstorage-toml] file before you run `helm generate`. Note that you don't need to base64-encode the credentials, as Helm will do that for you. For more information, see the [installation instructions][helm-install] for more details on using Helm.
+If you are using the [Helm Chart for Workflow][helm-chart], put your credentials in the [generate_params.toml][generate_params] file before you run `helm generate`. Note that you don't need to base64-encode the credentials, as Helm will do that for you. For more information, see the [installation instructions][helm-install] for more details on using Helm.
 
 ## [deis/slugbuilder](https://github.com/deis/slugbuilder)
 
@@ -57,13 +57,13 @@ Note that these environment variables are case-sensitive.
 
 ### Credentials
 
-The slugbuilder reads the credential information from a `objectstorage-keyfile` secret. This is generated automatically (as part of the `helm generate` command) based on the configuration options given in the [objectstorage.toml file][objectstorage-toml] file.
+The slugbuilder reads the credential information from a `objectstorage-keyfile` secret. This is generated automatically (as part of the `helm generate` command) based on the configuration options given in the [generate_params.toml file][generate_params] file.
 
 ### Helm Chart
 
 The [Helm Chart for Workflow][helm-chart] contains no manifest for the slugbuilder. As noted above, the builder handles all configuration and lifecycle management for you.
 
-If, however, you wish to run the slugbuilder as a standalone component, you can use the `objectstorage-keyfile` secret to easily provide your pods with the credentials information they need. This is generated automatically (as part of the `helm generate` command) based on the configuration options given in the [objectstorage.toml file][objectstorage-toml] file.
+If, however, you wish to run the slugbuilder as a standalone component, you can use the `objectstorage-keyfile` secret to easily provide your pods with the credentials information they need. This is generated automatically (as part of the `helm generate` command) based on the configuration options given in the [generate_params.toml file][generate_params] file.
 
 ## [deis/slugrunner](https://github.com/deis/slugrunner)
 
@@ -75,13 +75,13 @@ The slugrunner uses the `SLUG_URL` environment variable to determine where to do
 
 ### Credentials
 
-The slugrunner reads the credential information from a `objectstorage-keyfile` secret. This is generated automatically (as part of the `helm generate` command) based on the configuration options given in the [objectstorage.toml file][objectstorage-toml] file.
+The slugrunner reads the credential information from a `objectstorage-keyfile` secret. This is generated automatically (as part of the `helm generate` command) based on the configuration options given in the [generate_params.toml file][generate_params] file.
 
 ### Helm Chart
 
 The [Helm Chart for Workflow][helm-chart] contains no manifest for the slugrunner. As noted above, the controller handles all configuration and lifecycle management for you.
 
-If, however, you wish to run the slugrunner as a standalone component, you can use the `objectstorage-keyfile` secret to easily provide your pods with the credentials information they need. This is generated automatically (as part of the `helm generate` command) based on the configuration options given in the [objectstorage.toml file][objectstorage-toml] file.
+If, however, you wish to run the slugrunner as a standalone component, you can use the `objectstorage-keyfile` secret to easily provide your pods with the credentials information they need. This is generated automatically (as part of the `helm generate` command) based on the configuration options given in the [generate_params.toml file][generate_params] file.
 
 ## [deis/controller](https://github.com/deis/controller)
 
@@ -99,7 +99,7 @@ No paths need to be mounted into the pod. Simply ensure that the secret exists i
 
 ### Helm Chart
 
-If you are using the [Helm Chart for Workflow][helm-chart], put your credentials in the [objectstorage.toml][objectstorage-toml] file before you run `helm generate`. Note that you don't need to base64-encode the credentials, as Helm will do that for you. For more information, see the [installation instructions][helm-install] for more details on using Helm.
+If you are using the [Helm Chart for Workflow][helm-chart], put your credentials in the [generate_params.toml][generate_params] file before you run `helm generate`. Note that you don't need to base64-encode the credentials, as Helm will do that for you. For more information, see the [installation instructions][helm-install] for more details on using Helm.
 
 ## [deis/registry](https://github.com/deis/registry)
 
@@ -111,11 +111,11 @@ The registry looks for a `REGISTRY_STORAGE` environment variable, which it then 
 
 ### Credentials
 
-The registry reads the credential information from a `/var/run/secrets/deis/registry/creds/objectstorage-keyfile` file. This is generated automatically (as part of the `helm generate` command) based on the configuration options given in the [objectstorage.toml file][objectstorage-toml] file.
+The registry reads the credential information from a `/var/run/secrets/deis/registry/creds/objectstorage-keyfile` file. This is generated automatically (as part of the `helm generate` command) based on the configuration options given in the [generate_params.toml file][generate_params] file.
 
 ### Helm Chart
 
-If you are using the [Helm Chart for Workflow][helm-chart], put your credentials in the [objectstorage.toml][objectstorage-toml] file before you run `helm generate`. Note that you don't need to base64-encode the credentials, as Helm will do that for you. For more information, see the [installation instructions][helm-install] for more details on using Helm.
+If you are using the [Helm Chart for Workflow][helm-chart], put your credentials in the [generate_params.toml][generate_params] file before you run `helm generate`. Note that you don't need to base64-encode the credentials, as Helm will do that for you. For more information, see the [installation instructions][helm-install] for more details on using Helm.
 
 ## [deis/database](https://github.com/deis/postgres)
 
@@ -125,16 +125,16 @@ The database looks for a `DATABASE_STORAGE` environment variable, which it then 
 
 ### Credentials
 
-The database reads the credential information from a `objectstorage-keyfile` secret. This is generated automatically (as part of the `helm generate` command) based on the configuration options given in the [objectstorage.toml file][objectstorage-toml] file.
+The database reads the credential information from a `objectstorage-keyfile` secret. This is generated automatically (as part of the `helm generate` command) based on the configuration options given in the [generate_params.toml file][generate_params] file.
 
 ### Helm Chart
 
-If you are using the [Helm Chart for Workflow][helm-chart], put your credentials in the [objectstorage.toml][objectstorage-toml] file before you run `helm generate`. Note that you don't need to base64-encode the credentials, as Helm will do that for you. For more information, see the [installation instructions][helm-install] for more details on using Helm.
+If you are using the [Helm Chart for Workflow][helm-chart], put your credentials in the [generate_params.toml][generate_params] file before you run `helm generate`. Note that you don't need to base64-encode the credentials, as Helm will do that for you. For more information, see the [installation instructions][helm-install] for more details on using Helm.
 
 
 [helm-chart]: https://github.com/deis/charts/tree/master/workflow-dev
 [minio-user-secret]: https://github.com/deis/charts/blob/master/workflow-dev/manifests/deis-minio-secret-user.yaml
 [helm-install]: https://github.com/deis/workflow/blob/master/src/installing-workflow/installing-deis-workflow.md
-[objectstorage-toml]: https://github.com/deis/charts/blob/master/workflow-dev/tpl/objectstorage.toml
+[generate_params]: https://github.com/deis/charts/blob/master/workflow-dev/tpl/generate_params.toml
 [k8s-service]: http://kubernetes.io/docs/user-guide/services/
 [k8s-secret]: http://kubernetes.io/docs/user-guide/secrets/
