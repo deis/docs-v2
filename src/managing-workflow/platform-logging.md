@@ -13,8 +13,8 @@ Logger acts like a syslog server and receives all log messages that are occurrin
 Installation of the logging components is separate from the installation of the Deis platform because of the requirement of Daemon Sets. You will need to follow these steps to get the logging components running on your kubernetes cluster.
 
 ```
-$ helm fetch deis/deis-logger-beta1-test
-$ helm install deis-logger-beta1-test
+$ helm fetch deis/deis-logger-beta1
+$ helm install deis-logger-beta1
 ```
 
 You will then need to watch the components come up and verify they are in a running state by executing the following command:
