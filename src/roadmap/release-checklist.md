@@ -64,7 +64,7 @@ version of our release for testing. The process is fairly simple:
 3. Modify the `workflow-$DEIS_RELEASE_SHORT/tpl/generate_params.toml` file to ensure that all
 `dockerTag` values look like `git-$COMPONENT_SHA_SHORT`, where `$COMPONENT_SHA_SHORT` is the first
 7 characters of the applicable SHA that you got in the previous step.
-4. Ensure that all `DEBUG` variables in manifests are `false`.
+4. Ensure that all `DEIS_DEBUG` variables in manifests are `false`.
 5. Commit your changes: `git commit -a -m "chore(workflow-$DEIS_RELEASE_SHORT): releasing workflow-$DEIS_RELEASE_SHORT"`
 6. Push your changes to your fork: `git push -u $YOUR_FORK_REMOTE release-$DEIS_RELEASE`. Note that
 `$YOUR_FORK_REMOTE` is the git URI to the remote of your `deis/charts` fork. Mine is `git@github.com:arschles/deis-charts.git`, for example.
