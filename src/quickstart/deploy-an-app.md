@@ -19,6 +19,22 @@ You are admin at http://deis.104.197.125.75.nip.io
 
 You have now registered your first user and you are ready to deploy an application.
 
+## Add SSH Key for the Admin User
+
+For **Dockerfile** and **Buildpack** based application deploys via `git push`, Deis Workflow identifies users via SSH
+keys. SSH keys are pushed to the platform and must be unique to each user. Users may have multiple SSH keys as needed.
+
+How to generate the SSH key check it [here](http://docs-v2.readthedocs.io/en/latest/users/ssh-keys/#generate-an-ssh-key).
+
+Run `deis keys:add` to upload your SSH key to Deis Workflow.
+
+```
+$ deis keys:add ~/.ssh/id_deis.pub
+Uploading id_deis.pub to deis... done
+```
+
+Read more about adding/removing SSH Keys [here](http://docs-v2.readthedocs.io/en/latest/users/ssh-keys/#adding-and-removing-ssh-keys).
+
 ## Deploy an Application
 
 Deis Workflow supports three different types of applications, Buildpacks,
