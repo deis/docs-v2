@@ -7,7 +7,6 @@ MKDOCS          = mkdocs
 MKDOCSBUILDOPTS = --clean --strict --verbose
 MKDOCSBUILD     = $(MKDOCS) build $(MKDOCSBUILDOPTS)
 MKDOCSSERVE     = $(MKDOCS) serve -a 0.0.0.0:8000
-SASS = themes/deis/static/scss/app.scss:themes/deis/static/css/styles.css --style compressed
 
 SHORT_NAME ?= workflow
 VERSION ?= git-$(shell git rev-parse --short HEAD)
@@ -21,15 +20,11 @@ DEV_ENV_CMD := ${DEV_ENV_PREFIX} ${DEV_ENV_IMAGE}
 
 build:
 	$(MKDOCSBUILD) --site-dir $(BUILDDIR)
-	sass ${SASS}
 	@echo
 	@echo "Build finished. The HTML pages are in $(BUILDDIR)."
 
 serve:
 	$(MKDOCSSERVE)
-
-watch:
-	sass --watch $(SASS)
 
 clean:
 	rm -rf $(BUILDDIR)/*
