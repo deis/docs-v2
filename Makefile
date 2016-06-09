@@ -17,6 +17,7 @@ DEV_ENV_WORK_DIR := /src/${REPO_PATH}
 DEV_ENV_PREFIX := docker run --rm -v ${CURDIR}:${DEV_ENV_WORK_DIR} -w ${DEV_ENV_WORK_DIR} -p 8000:8000
 DEV_ENV_CMD := ${DEV_ENV_PREFIX} ${DEV_ENV_IMAGE}
 
+
 build:
 	$(MKDOCSBUILD) --site-dir $(BUILDDIR)
 	@echo
