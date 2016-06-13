@@ -93,6 +93,8 @@ If the PR is from a Deis maintainer, then he or she should be the one to close i
 
 An exception to this is when an errant commit needs to be reverted urgently. If necessary, a PR that only reverts a previous commit can be merged without waiting for LGTM approval.
 
+Deis projects that are considered "infrastructure" may optionally choose to require only one maintainer LGTM before merging code. Infrastructure projects contain CI/CD resources or support tooling, not end-user code.
+
 [go]: http://golang.org/
 [glide]: https://github.com/Masterminds/glide
 [flake8]: https://pypi.python.org/pypi/flake8/
