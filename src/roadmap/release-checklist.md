@@ -162,7 +162,7 @@ It's time to retag each individual Docker image with the 'official' `$WORKFLOW_R
 To do so, simply run the following `deisrel` command:
 
 ```console
-deisrel docker retag $WORKFLOW_RELEASE --new-org="deis"
+deisrel docker retag $WORKFLOW_RELEASE --new-org="deis -ref release-$WORKFLOW_RELEASE"
 ```
 
 # Step 7: Update Changelogs
