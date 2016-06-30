@@ -12,10 +12,15 @@ should move it somewhere in your $PATH:
 
     $ ln -fs $PWD/deis /usr/local/bin/deis
 
+> **NOTE:** If you are using Linux you may have to prepend this command
+> with `sudo`
+
 Check your work by running `deis version`:
 
     $ deis version
     2.0.0
+
+> **NOTE:** Version numbers may vary as new releases become available
 
 ## Helm Classic Installation
 
@@ -24,6 +29,16 @@ We will install Deis Workflow using Helm Classic which is a tool for installing 
 Install the latest `helmc` cli for Linux or Mac OS X with:
 
     $ curl -sSL https://get.helm.sh | bash
+
+> **NOTE:** The `unzip` package is a requirement for this command
+
+The installer places the `helmc` binary in your current directory, but you
+should move it somewhere in your $PATH:
+
+    $ ln -fs $PWD/helmc /usr/local/bin/helmc
+
+> **NOTE:** If you are using Linux you may have to prepend this command
+> with `sudo`
 
 *or*:
 
