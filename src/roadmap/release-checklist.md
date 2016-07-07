@@ -50,7 +50,7 @@ be in a new directory called `workflow-v2.0.0`.
   Otherwise, for bulk-cutting all repos at the same time, run the following command:
 
   ```console
-  deisrel branches create --name="release-${WORKFLOW_RELEASE} --ref="master"
+  deisrel branches create --name="release-${WORKFLOW_RELEASE} --ref="master" --yes=true
   ```
 
 # Step 2: Create New Helm Classic Charts
