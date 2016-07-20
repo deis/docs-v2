@@ -104,15 +104,15 @@ version of our release for testing. Here is the current process to do so:
         cp -r workflow-dev-e2e workflow-$WORKFLOW_RELEASE_SHORT-e2e
         cp -r router-dev router-$WORKFLOW_RELEASE_SHORT
 
-  4. Stage copies of all files needing release updates into the appropriate chart directories created above, supplying `--ref release-$WORKFLOW_RELEASE` to specify this branch/ref for lookup of latest commit shas (informing `generate_params.toml`), as well as `--stagingDir <appropriate staging dir>` to inform `deisrel` where to put updated files:
+  4. Run `deisrel git shas --ref=master` to get the current SHAs at the tip of the `master` branch on each repo
 
-        deisrel helm-stage --ref release-$WORKFLOW_RELEASE --stagingDir workflow-$WORKFLOW_RELEASE_SHORT workflow
-        deisrel helm-stage --ref release-$WORKFLOW_RELEASE --stagingDir workflow-$WORKFLOW_RELEASE_SHORT-e2e e2e
-        deisrel helm-stage --ref release-$WORKFLOW_RELEASE --stagingDir router-$WORKFLOW_RELEASE_SHORT router
+  5. Change the `generate_params.toml` files in each new chart as follows:
+    1. Set all `pullPolicy` values to `IfNotPresent`
+    2. Set all `dockerTag` values to `git-${REPO_SHA}`, where `${REPO_SHA}` is the appropriate sha for the repository, as reported in step (3)
 
-  5. Delete the `KUBERNETES_POD_TERMINATION_GRACE_PERIOD_SECONDS` env var from `workflow-$WORKFLOW_RELEASE_SHORT/tpl/deis-controller-rc.yaml`
+  6. Delete the `KUBERNETES_POD_TERMINATION_GRACE_PERIOD_SECONDS` env var from `workflow-$WORKFLOW_RELEASE_SHORT/tpl/deis-controller-rc.yaml`
 
-  6. Test the new Workflow chart and make sure it installs:
+  7. Test the new Workflow chart and make sure it installs:
 
         cp -r workflow-$WORKFLOW_RELEASE_SHORT* `helmc home`/workspace/charts
         helmc generate workflow-$WORKFLOW_RELEASE_SHORT
@@ -123,16 +123,16 @@ version of our release for testing. Here is the current process to do so:
         helmc generate workflow-$WORKFLOW_RELEASE_SHORT-e2e
         helmc install workflow-$WORKFLOW_RELEASE_SHORT-e2e
 
-  7. Commit your changes:
+  8. Commit your changes:
 
         git commit -a -m "chore(workflow-$WORKFLOW_RELEASE_SHORT): releasing workflow-$WORKFLOW_RELEASE_SHORT(-e2e)"
 
-  8. Push your changes:
+  9. Push your changes:
 
         git push upstream HEAD:release-$WORKFLOW_RELEASE
 
 
-  9. Open a pull request from your branch to merge into `master` on https://github.com/deis/charts
+  10. Open a pull request from your branch to merge into `master` on https://github.com/deis/charts
 
 # Step 5: Update Documentation
 
