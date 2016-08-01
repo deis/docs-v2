@@ -7,11 +7,11 @@ Dockerfiles are incredibly powerful but require some extra work to define your e
  
 For **Dockerfile** based application deploys via `git push`, Deis Workflow identifies users via SSH keys. SSH keys are pushed to the platform and must be unique to each user.
 
-How to generate the SSH key check it [here](../users/ssh-keys.md/#generate-an-ssh-key).
+- See [this document](../users/ssh-keys.md/#generate-an-ssh-key) for instructions on how to generate an SSH key.
 
-Run `deis keys:add` to upload your SSH key to Deis Workflow.
+- Run `deis keys:add` to upload your SSH key to Deis Workflow.
 
-```
+- ```
 $ deis keys:add ~/.ssh/id_deis.pub
 Uploading id_deis.pub to deis... done
 ```
