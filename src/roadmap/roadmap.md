@@ -12,7 +12,7 @@ items are designed to provide a sense of direction over many releases.
 Deis Workflow should use Kubernetes-native constructs wherever possible. By
 switching to `Deployments`, the controller component will no longer need to
 orchestrate rolling deploys. Instead, controller can delegate that work to
-Kubernetes control loops. this feature
+Kubernetes control loops.
 
 * [X] Support Kubernetes Deployments <https://github.com/deis/controller/pull/854>
 * [ ] Kubernetes Deployments by default
@@ -23,7 +23,7 @@ Many users of Deis v1 requested the ability to push and pull application
 artifacts from private Docker registries. While v1 supported a
 [workaround](https://github.com/deis/deis/issues/2232) or two, operators
 usually had to intervene or build custom tooling. Deis Workflow aims to make it
-simple to configure your Worfklow install to pull and push images to private
+simple to configure your Workflow install to pull and push images to private
 registries.
 
 * [X] Pull from private registry <https://github.com/deis/workflow/pull/201>
