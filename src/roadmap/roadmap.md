@@ -1,7 +1,7 @@
 # Deis Workflow Roadmap
 
 The Deis Workflow Roadmap is a community document created as part of the open
-[Planning Process](planning-process.md).  Each roadmap item describes a high-level capability or
+[Planning Process](planning-process.md). Each roadmap item describes a high-level capability or
 grouping of features that are deemed important to the future of Deis.
 
 Given the project's rapid [Release Schedule](releases.md), roadmap
@@ -64,14 +64,12 @@ their application environment.
 
 Related issues:
 
-* [ ] <https://github.com/deis/workflow-cli/issues/98>
-* [ ] <https://github.com/deis/deis/issues/117>
+* <https://github.com/deis/workflow-cli/issues/98>
+* <https://github.com/deis/deis/issues/117>
 
 ## Log Streaming
 
-Stream application logs via `deis logs -f`:
-
-* [ ] <https://github.com/deis/deis/issues/465>
+Stream application logs via `deis logs -f` <https://github.com/deis/deis/issues/465>
 
 ## Teams and Permissions
 
@@ -97,8 +95,7 @@ Related issues:
 
 Developers should be able to quickly and easily provision application
 dependencies using a services or addon abstraction.
-
-* [ ] <https://github.com/deis/deis/issues/231>
+<https://github.com/deis/deis/issues/231>
 
 ## Inbound/Outbound Webhooks
 
