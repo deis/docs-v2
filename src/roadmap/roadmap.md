@@ -1,7 +1,7 @@
 # Deis Workflow Roadmap
 
 The Deis Workflow Roadmap is a community document created as part of the open
-[Planning Process][].  Each roadmap item describes a high-level capability or
+[Planning Process](planning-process.md).  Each roadmap item describes a high-level capability or
 grouping of features that are deemed important to the future of Deis.
 
 Given the project's rapid [Release Schedule](releases.md), roadmap
