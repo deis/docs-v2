@@ -4,10 +4,10 @@ This document is aimed at those who have already provisioned a [Kubernetes v1.2 
 and want to install Deis Workflow. If you are just getting started with Kubernetes and
 Deis Workflow, follow our [quickstart guide](../quickstart/index.md) for help.
 
-
 ## Prerequisites
 
-You need to [install Helm Classic and Deis Workflow CLI before continuing](../quickstart/install-cli-tools.md).
+1. Verify the [Kubernetes system requirements](system-requirements.md)
+1. Install [Helm Classic and Deis Workflow CLI](../quickstart/install-cli-tools.md) tools
 
 ## Check Your Setup
 
