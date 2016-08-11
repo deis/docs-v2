@@ -38,6 +38,20 @@ InfluxDB is running at https://52.9.206.49/api/v1/proxy/namespaces/kube-system/s
 If you see a list of targets like the one above, `helmc` can communicate with the Kubernetes master. Double check that
 the master returned by `helmc target` matches the expected cluster.
 
+## Choose Your Deployment Strategy
+
+Deis Workflow includes everything it needs to run out of the box. However, these defaults are aimed at simplicity rather than
+production readiness. Production and staging deployments of Workflow should, at a minimum, use off-cluster storage.
+Which is used by Workflow components to store and backup critical data. Should an operator need to completely re-install
+Workflow, the required components can recover from off-cluster storage. See our documentation for [configuring object
+storage](configuring-object-storage.md) for more details.
+
+Workflow may also be configured to use off-cluster persistence for [Postgres](configuring-postgres.md) and
+Redis. A deployment strategy that mirrors the "stateless" clusters from Deis v1 PaaS.
+
+Last but not least, Workflow may also use a dedicated off-cluster image registry, including Docker Hub, Quay.io, ECR or
+GCR for all container images. Read more about [configuring your registry](configuring-registry.md).
+
 ## Add the Deis Chart Repository
 
 The [Deis Chart Repository](https://github.com/deis/charts) contains everything you need to install Deis Workflow onto
