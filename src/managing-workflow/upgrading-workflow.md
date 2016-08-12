@@ -73,7 +73,7 @@ Fetching the new chart copies the chart from the chart cache into the helmc work
 $ helmc fetch deis/workflow-${DESIRED_WORKFLOW_RELEASE}
 ```
 
-### Step 3: Fetch credentials secrets
+### Step 3: Fetch credentials
 
 The first time Workflow is installed, Helm automatically generates secrets for the builder and database components.
 When upgrading, take care to use credentials from the running Workflow installation. The following commands export the
@@ -87,7 +87,7 @@ $ kubectl --namespace=deis get secret database-creds -o yaml > ~/active-deis-dat
 $ kubectl --namespace=deis get secret builder-ssh-private-keys -o yaml > ~/active-deis-builder-secret-ssh-private-keys.yaml
 ```
 
-### Step 4: Modify Workflow configuration
+### Step 4: Modify and update configuration
 
 Before generating the manifests for the newest release, operators should update the new `generate_params.toml` to match
 configuration from the **previous release**.
@@ -102,7 +102,7 @@ $ $EDITOR $(helmc home)/workspace/charts/workflow-${DESIRED_WORKFLOW_RELEASE}/tp
 $ helmc generate -x manifests workflow-${DESIRED_WORKFLOW_RELEASE}
 ```
 
-### Step 5: Apply secrets from the current version
+### Step 5: Apply secrets
 
 After generating new manifests in the previous step, copy the current secrets into place:
 
@@ -137,39 +137,37 @@ $ helmc uninstall workflow-${PREVIOUS_WORKFLOW_RELEASE} -n deis
 $ helmc install workflow-${DESIRED_WORKFLOW_RELEASE}
 ```
 
-### Step 7: Upgrade complete
+### Step 7: Verify upgrade
 
-Verify that all components start and pass their readiness checks:
+Verify that all components have started and passed their readiness checks:
 
 ```
 $ kubectl --namespace=deis get pods
+$ kd get po
 NAME                                     READY     STATUS    RESTARTS   AGE
-deis-builder-960729275-5idi2             1/1       Running   0          8d
-deis-controller-2188390404-n2mt7         1/1       Running   6          8d
-deis-database-y7ll7                      1/1       Running   0          8d
-deis-logger-1vf86                        1/1       Running   2          8d
-deis-logger-fluentd-1847w                1/1       Running   0          8d
-deis-logger-fluentd-21u2x                1/1       Running   0          8d
-deis-logger-fluentd-2acoz                1/1       Running   0          8d
-deis-logger-fluentd-cgflu                1/1       Running   0          8d
-deis-logger-fluentd-r67az                1/1       Running   0          8d
-deis-logger-redis-5qyyy                  1/1       Running   0          8d
-deis-monitor-grafana-bygn5               1/1       Running   0          8d
-deis-monitor-influxdb-ncr3b              1/1       Running   0          8d
-deis-monitor-telegraf-0of5j              1/1       Running   1          8d
-deis-monitor-telegraf-l3xev              1/1       Running   0          8d
-deis-monitor-telegraf-m9x7m              1/1       Running   1          8d
-deis-monitor-telegraf-q5j6k              1/1       Running   1          8d
-deis-monitor-telegraf-ysf6t              1/1       Running   0          8d
-deis-nsqd-b5nfv                          1/1       Running   0          8d
-deis-registry-2073159755-22sn0           1/1       Running   0          8d
-deis-registry-proxy-b35uz                1/1       Running   0          8d
-deis-registry-proxy-b4f96                1/1       Running   0          8d
-deis-registry-proxy-kdesk                1/1       Running   0          8d
-deis-registry-proxy-llm2t                1/1       Running   0          8d
-deis-registry-proxy-xf42p                1/1       Running   0          8d
-deis-router-2148759016-4n74q             1/1       Running   0          8d
-deis-workflow-manager-3848344427-1dejp   1/1       Running   0          8d
+deis-builder-2448122224-3cibz            1/1       Running   0          5m
+deis-controller-1410285775-ipc34         1/1       Running   3          5m
+deis-database-e7c5z                      1/1       Running   0          5m
+deis-logger-cgjup                        1/1       Running   3          5m
+deis-logger-fluentd-45h7j                1/1       Running   0          5m
+deis-logger-fluentd-4z7lw                1/1       Running   0          5m
+deis-logger-fluentd-k2wsw                1/1       Running   0          5m
+deis-logger-fluentd-skdw4                1/1       Running   0          5m
+deis-logger-redis-8nazu                  1/1       Running   0          5m
+deis-monitor-grafana-tm266               1/1       Running   0          5m
+deis-monitor-influxdb-ah8io              1/1       Running   0          5m
+deis-monitor-telegraf-51zel              1/1       Running   1          5m
+deis-monitor-telegraf-cdasg              1/1       Running   0          5m
+deis-monitor-telegraf-hea6x              1/1       Running   0          5m
+deis-monitor-telegraf-r7lsg              1/1       Running   0          5m
+deis-nsqd-3yrg2                          1/1       Running   0          5m
+deis-registry-1814324048-yomz5           1/1       Running   0          5m
+deis-registry-proxy-4m3o4                1/1       Running   0          5m
+deis-registry-proxy-no3r1                1/1       Running   0          5m
+deis-registry-proxy-ou8is                1/1       Running   0          5m
+deis-registry-proxy-zyajl                1/1       Running   0          5m
+deis-router-1357759721-a3ard             1/1       Running   0          5m
+deis-workflow-manager-2654760652-kitf9   1/1       Running   0          5m
 ```
 
 [configuring object storage]: ../installing-workflow/configuring-object-storage.md
