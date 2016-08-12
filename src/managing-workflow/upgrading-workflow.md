@@ -94,7 +94,7 @@ configuration from the **previous release**.
 
 ```
 # update your off-cluster storage configuration
-$ $EDITOR $(helmc home)/workspace/charts/workflow-${DESIRED_WORKFLOW_RELEASE/tpl/generate_params.toml
+$ $EDITOR $(helmc home)/workspace/charts/workflow-${DESIRED_WORKFLOW_RELEASE}/tpl/generate_params.toml
 ```
 
 ```
