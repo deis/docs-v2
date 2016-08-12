@@ -30,7 +30,9 @@ intact so routing and DNS are preserved while reinstalling Workflow.
 
 See the Helm Classic documentation for more detail about [keeper manifests].
 
-## Process
+## Upgrade Process
+
+### Step 1: Verify component annotations
 
 To verify that the namespace, router and registry are marked as "keepers" run the following kubectl command for each component:
 
@@ -47,43 +49,121 @@ $ kubectl --namespace=deis annotate namespace deis helm-keep=true
 namespace "deis" annotated
 ```
 
-To upgrade to a newer version of Workflow, run the following:
+### Step 2: Fetch new charts
+
+Workflow charts are always published with a version number intact. The command `helmc update` updates the local chart
+repository to the latest set of releases.
 
 ```
 # update the charts repo
 $ helmc update
+```
 
-# fetch your current database credentials
-$ kubectl --namespace=deis get secret database-creds -o yaml > ~/active-deis-database-secret-creds.yaml
-# fetch the ssh key for the builder component
-$ kubectl --namespace=deis get secret builder-ssh-private-keys -o yaml > ~/active-deis-builder-secret-ssh-private-keys.yaml
+Fetching the new chart copies the chart from the chart cache into the helmc workspace for customization.
 
+```
 # fetch new chart
 $ helmc fetch deis/workflow-v2.3.0
+```
 
+### Step 3: Fetch credentials secrets
+
+The first time Workflow is installed, Helm automatically generates secrets for the builder and database components.
+When upgrading, take care to use credentials from the running Workflow installation. The following commands export the
+secrets to the local workstation. They will be copied into place in a later step.
+
+```
+# fetch the current database credentials to the local workstation
+$ kubectl --namespace=deis get secret database-creds -o yaml > ~/active-deis-database-secret-creds.yaml
+
+# fetch the builder component ssh keys to the local workstation
+$ kubectl --namespace=deis get secret builder-ssh-private-keys -o yaml > ~/active-deis-builder-secret-ssh-private-keys.yaml
+```
+
+### Step 4: Modify Workflow configuration
+
+Before generating the manifests for the newest release, operators should update the new `generate_params.toml` to match
+configuration from the **previous release**.
+
+```
 # update your off-cluster storage configuration
 $ $EDITOR $(helmc home)/workspace/charts/workflow-v2.3.0/tpl/generate_params.toml
+```
 
-# generate new templates
+```
+# generate templates for the new release
 $ helmc generate -x manifests workflow-v2.3.0
+```
 
-# copy your active database secrets into the helmc workspace
+### Step 5: Apply secrets from the current version
+
+After generating new manifests in the previous step, copy the current secrets into place:
+
+```
+# copy your active database secrets into the helmc workspace for the desired version
 $ cp ~/active-deis-database-secret-creds.yaml \
 	$(helmc home)/workspace/charts/workflow-v2.3.0/manifests/deis-database-secret-creds.yaml
 
-# copy your active builder ssh keys into the helmc workspace
+# copy your active builder ssh keys into the helmc workspace for the desired version
 $ cp ~/active-deis-builder-secret-ssh-private-keys.yaml \
 	$(helmc home)/workspace/charts/workflow-v2.3.0/manifests/deis-builder-secret-ssh-private-keys.yaml
+```
 
+!!! note
+    Make sure to copy the existing credentials manifests into the new chart
+    location *after* `helmc generate` to preserve credentials from the running system.
+
+### Step 6: Apply the Workflow upgrade
+
+Helm Classic will remove all components from the previous release that are **not** marked as keepers. As of Workflow
+2.3 and later, the controller, registry and router will be left in-service. Traffic to applications deployed through
+Worfklow will continue to flow between the `uninstall` and `install` commands.
+
+If Workflow is not configured to use off-cluster Postgres the Workflow API will experience a brief period of downtime
+while the database component recovers from backup.
+
+```
 # uninstall workflow
-$ helmc uninstall workflow-v2.1.0 -n deis
+$ helmc uninstall workflow-v2.2.0 -n deis
 
 # install workflow v2.3.0
 $ helmc install workflow-v2.3.0
 ```
 
-Make sure to copy the existing `deis-database-secret-creds.yaml` manifest into the new chart
-location *after* `helmc generate` to keep database credentials intact.
+### Step 7: Upgrade complete
+
+Verify that all components start and pass their readiness checks:
+
+```
+$ kubectl --namespace=deis get pods
+NAME                                     READY     STATUS    RESTARTS   AGE
+deis-builder-960729275-5idi2             1/1       Running   0          8d
+deis-controller-2188390404-n2mt7         1/1       Running   6          8d
+deis-database-y7ll7                      1/1       Running   0          8d
+deis-logger-1vf86                        1/1       Running   2          8d
+deis-logger-fluentd-1847w                1/1       Running   0          8d
+deis-logger-fluentd-21u2x                1/1       Running   0          8d
+deis-logger-fluentd-2acoz                1/1       Running   0          8d
+deis-logger-fluentd-cgflu                1/1       Running   0          8d
+deis-logger-fluentd-r67az                1/1       Running   0          8d
+deis-logger-redis-5qyyy                  1/1       Running   0          8d
+deis-monitor-grafana-bygn5               1/1       Running   0          8d
+deis-monitor-influxdb-ncr3b              1/1       Running   0          8d
+deis-monitor-telegraf-0of5j              1/1       Running   1          8d
+deis-monitor-telegraf-l3xev              1/1       Running   0          8d
+deis-monitor-telegraf-m9x7m              1/1       Running   1          8d
+deis-monitor-telegraf-q5j6k              1/1       Running   1          8d
+deis-monitor-telegraf-ysf6t              1/1       Running   0          8d
+deis-nsqd-b5nfv                          1/1       Running   0          8d
+deis-registry-2073159755-22sn0           1/1       Running   0          8d
+deis-registry-proxy-b35uz                1/1       Running   0          8d
+deis-registry-proxy-b4f96                1/1       Running   0          8d
+deis-registry-proxy-kdesk                1/1       Running   0          8d
+deis-registry-proxy-llm2t                1/1       Running   0          8d
+deis-registry-proxy-xf42p                1/1       Running   0          8d
+deis-router-2148759016-4n74q             1/1       Running   0          8d
+deis-workflow-manager-3848344427-1dejp   1/1       Running   0          8d
+```
 
 [configuring object storage]: ../installing-workflow/configuring-object-storage.md
 [keeper manifests]: http://helm-classic.readthedocs.io/en/latest/awesome/#keeper-manifests
