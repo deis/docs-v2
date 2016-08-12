@@ -32,7 +32,7 @@ See the Helm Classic documentation for more detail about [keeper manifests].
 
 ## Upgrade Process
 
-### Step 1: Verify component annotations
+### Step 1: Verify component annotations and prepare upgrade
 
 To verify that the namespace, router and registry are marked as "keepers" run the following kubectl command for each component:
 
@@ -49,6 +49,13 @@ $ kubectl --namespace=deis annotate namespace deis helm-keep=true
 namespace "deis" annotated
 ```
 
+Exporting environment variables for the previous and latest versions will help reduce confusion later on:
+
+```
+$ export PREVIOUS_WORKFLOW_RELEASE=v2.2.0
+$ export DESIRED_WORKFLOW_RELEASE=v2.3.0
+```
+
 ### Step 2: Fetch new charts
 
 Workflow charts are always published with a version number intact. The command `helmc update` updates the local chart
@@ -63,7 +70,7 @@ Fetching the new chart copies the chart from the chart cache into the helmc work
 
 ```
 # fetch new chart
-$ helmc fetch deis/workflow-v2.3.0
+$ helmc fetch deis/workflow-${DESIRED_WORKFLOW_RELEASE}
 ```
 
 ### Step 3: Fetch credentials secrets
@@ -87,12 +94,12 @@ configuration from the **previous release**.
 
 ```
 # update your off-cluster storage configuration
-$ $EDITOR $(helmc home)/workspace/charts/workflow-v2.3.0/tpl/generate_params.toml
+$ $EDITOR $(helmc home)/workspace/charts/workflow-${DESIRED_WORKFLOW_RELEASE/tpl/generate_params.toml
 ```
 
 ```
 # generate templates for the new release
-$ helmc generate -x manifests workflow-v2.3.0
+$ helmc generate -x manifests workflow-${DESIRED_WORKFLOW_RELEASE}
 ```
 
 ### Step 5: Apply secrets from the current version
@@ -102,11 +109,11 @@ After generating new manifests in the previous step, copy the current secrets in
 ```
 # copy your active database secrets into the helmc workspace for the desired version
 $ cp ~/active-deis-database-secret-creds.yaml \
-	$(helmc home)/workspace/charts/workflow-v2.3.0/manifests/deis-database-secret-creds.yaml
+	$(helmc home)/workspace/charts/workflow-${DESIRED_WORKFLOW_RELEASE}/manifests/deis-database-secret-creds.yaml
 
 # copy your active builder ssh keys into the helmc workspace for the desired version
 $ cp ~/active-deis-builder-secret-ssh-private-keys.yaml \
-	$(helmc home)/workspace/charts/workflow-v2.3.0/manifests/deis-builder-secret-ssh-private-keys.yaml
+	$(helmc home)/workspace/charts/workflow-${DESIRED_WORKFLOW_RELEASE}/manifests/deis-builder-secret-ssh-private-keys.yaml
 ```
 
 !!! note
@@ -124,10 +131,10 @@ while the database component recovers from backup.
 
 ```
 # uninstall workflow
-$ helmc uninstall workflow-v2.2.0 -n deis
+$ helmc uninstall workflow-${PREVIOUS_WORKFLOW_RELEASE} -n deis
 
-# install workflow v2.3.0
-$ helmc install workflow-v2.3.0
+# install latest workflow release
+$ helmc install workflow-${DESIRED_WORKFLOW_RELEASE}
 ```
 
 ### Step 7: Upgrade complete
