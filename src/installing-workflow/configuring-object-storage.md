@@ -21,43 +21,66 @@ Depending on your chosen object storage you may need to provide globally unique 
 
 If you provide credentials with sufficient access to the underlying storage, Workflow components will create the buckets if they do not exist.
 
-### Step 2: Generate credentials
+### Step 2: Generate storage credentials
 
-If applicable, generate credentials that have write access to the storage buckets created in Step 1
+If applicable, generate credentials that have create and write access to the storage buckets created in Step 1.
+
+If you are using AWS S3 and your Kubernetes nodes are configured with appropriate IAM API keys via InstanceRoles, you do not need to create API credentials. Do, however, validate that the InstanceRole has appropriate permissions to the configured buckets!
 
 ### Step 3: Fetch Workflow charts
 
- If you haven't already fetched the helm classic chart, do so with `helmc fetch deis/workflow-v2.3.0`
+If you haven't already fetched the Helm Classic chart, do so with `helmc fetch deis/workflow-v2.3.0`
 
-### Step 4: Configure storage
+### Step 4: Configure Workflow charts
 
-Update storage details either by setting the appropriate environment variables or by modifying the template file `tpl/generate_params.toml`
+Operators should configure object storage by either populating a set of environment variables or editing the the Helm Classic parameters file before running `helmc generate`. Both options are documented below:
 
-**Option 1: Using environment variables**
+**Option 1:** Using environment variables
 
 | Storage Type | Required Variables                                                                                                                                          | Notes                                                                                               |
 | ---          | ---                                                                                                                                                         | ---                                                                                                 |
 | s3           | `AWS_ACCESS_KEY`, `AWS_SECRET_KEY`, `AWS_REGISTRY_BUCKET`, `AWS_DATABASE_BUCKET`, `AWS_BUILDER_BUCKET`, `S3_REGION`                                         | To use [IAM credentials][aws-iam], it is not necessary to set `AWS_ACCESS_KEY` or `AWS_SECRET_KEY`. |
 | gcs          | `GCS_KEY_JSON`, `GCS_REGISTRY_BUCKET`, `GCS_DATABASE_BUCKET`, `GCS_BUILDER_BUCKET`                                                                          |                                                                                                     |
 | azure        | `AZURE_ACCOUNT_NAME`, `AZURE_ACCOUNT_KEY`, `AZURE_REGISTRY_CONTAINER`, `AZURE_DATABASE_CONTAINER`, `AZURE_BUILDER_CONTAINER`                                |                                                                                                     |
-| swift        | `SWIFT_USERNAME`, `SWIFT_PASSWORD`, `SWIFT_AUTHURL`, `SWIFT_AUTHVERSION`, `SWIFT_REGISTRY_CONTAINER`, `SWIFT_DATABASE_CONTAINER`, `SWIFT_BUILDER_CONTAINER` |  To specify tenant set `SWIFT_TENANT` if the auth version is 2 or more.                             |
+| swift        | `SWIFT_USERNAME`, `SWIFT_PASSWORD`, `SWIFT_AUTHURL`, `SWIFT_AUTHVERSION`, `SWIFT_REGISTRY_CONTAINER`, `SWIFT_DATABASE_CONTAINER`, `SWIFT_BUILDER_CONTAINER` | To specify tenant set `SWIFT_TENANT` if the auth version is 2 or later.                             |
 
-**Option 2: Using template file `tpl/generate_params.toml`**
+!!! note
+	These environment variables should be set **before** running `helmc generate` in Step 5.
 
-* Open the helm classic chart with `helmc edit workflow-v2.3.0` and look for the template file `tpl/generate_params.toml`
-* Update the `storage` parameter to reference the storage platform you are using: `s3`, `azure`, `gcs`
-* Update the values in the section which corresponds to your storage type, including region, bucket names, and access credentials
+**Option 2:** Using template file `tpl/generate_params.toml`
+
+* Edit Helm Classic chart by running `helmc edit workflow-v2.3.0` and look for the template file `tpl/generate_params.toml`
+* Update the `storage` parameter to reference the platform you are using, e.g. `s3`, `azure`, `gcs`, or `swift`
+* Find the corresponding section for your storage type and provide appropriate values including region, bucket names, and access credentials.
+* Save your changes to `tpl/generate_params.toml`.
 
 !!! note
 	You do not need to base64 encode any of these values as Helm Classic will handle encoding automatically.
 
 ### Step 5: Generate manifests
 
-Save your changes and re-generate the helm classic chart by running `helmc generate -x manifests workflow-v2.3.0`
+Generate the Workflow chart by running `helmc generate -x manifests workflow-v2.3.0`.
 
 ### Step 6: Verify credentials
 
-Check the generated file in your manifests directory, you should see `deis-objectstorage-secret.yaml`
+Helm Classic stores the object storage configuration as a Kubernetes secret.
+
+You may check the contents of the generated file named `deis-objectstorage-secret.yaml` in the `helmc` workspace directory:
+```
+$ cat $(helmc home)/workspace/charts/workflow-v2.3.0/manifests/deis-objectstorage-secret.yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: objectstorage-keyfile
+...
+data:
+  accesskey: bm9wZSBub3BlCg==
+  secretkey: c3VwZXIgbm9wZSBub3BlIG5vcGUgbm9wZSBub3BlCg==
+  region: ZWFyZgo=
+  registry-bucket: bXlmYW5jeS1yZWdpc3RyeS1idWNrZXQK
+  database-bucket: bXlmYW5jeS1kYXRhYmFzZS1idWNrZXQK
+  builder-bucket: bXlmYW5jeS1idWlsZGVyLWJ1c2tldAo=
+```
 
 You are now ready to `helmc install workflow-v2.3.0` using your desired object storage.
 
