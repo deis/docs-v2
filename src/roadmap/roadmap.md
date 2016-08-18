@@ -14,7 +14,7 @@ switching to `Deployments`, the controller component will no longer need to
 orchestrate rolling deploys. Instead, controller can delegate that work to
 Kubernetes control loops.
 
-* [X] Support Kubernetes Deployments <https://github.com/deis/controller/pull/854>
+* [X] Support Kubernetes Deployments <https://github.com/deis/controller/pull/854> (Workflow 2.2)
 * [X] Kubernetes Deployments by default (Workflow 2.4)
 
 ## Private Registry and Native IaaS Registry Support
@@ -26,7 +26,7 @@ usually had to intervene or build custom tooling. Deis Workflow aims to make it
 simple to configure your Workflow install to pull and push images to private
 registries.
 
-* [X] Pull from private registry <https://github.com/deis/workflow/pull/201>
+* [X] Pull from private registry <https://github.com/deis/workflow/pull/201> (Workflow 2.0)
 * [X] Push to private registry for builder (Workflow 2.3)
 * [X] Support native auth strategies for ECR and GCR (Workflow 2.4)
 
