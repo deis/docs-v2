@@ -52,6 +52,14 @@ $ helmc install workflow-v2.7.0               # injects resources into
                                               # your cluster
 ```
 
+!!! Experimental
+	Workflow can also be installed now using the [Kubernetes Helm][helm]. All the details that are needed for a production deployments like off-cluster storage, external registry etc., can be configured by passing an optional [values file][valuesfile] which overrides default values.
+
+
+    	$ helm repo add deis https://charts.deis.com/workflow  # add the workflow charts repo
+
+    	$ helm install deis/workflow --version=v2.7.0 --namespace=deis -f <optional values file>  # injects resources into your cluster
+
 Helm Classic will install a variety of Kubernetes resources in the `deis` namespace.
 You'll need to wait for the pods that it launched to be ready. Monitor their status
 by running:
@@ -93,7 +101,7 @@ After installing Workflow on your cluster, you will need to adjust your load bal
 By default, the connection timeout for Elastic Load Blancers is 60 seconds. Unfortunately, this timeout is too short for
 long running connections when using `git push` functionality of Deis Workflow.
 
-Deis Workflow will automatically provision and attach a Elastic Loadbalancer to the router copmonent. This
+Deis Workflow will automatically provision and attach a Elastic Loadbalancer to the router component. This
 component is responsible for routing HTTP and HTTPS requests from the public internet to applications that are deployed
 and managed by Deis Workflow.
 
@@ -122,3 +130,7 @@ CONNECTIONSETTINGS	1200
 ```
 
 Next, [configure dns](dns.md) so you can register your first user and deploy an application.
+
+
+[helm]: https://github.com/kubernetes/helm/blob/master/docs/install.md
+[valuesfile]: https://charts.deis.com/workflow/values-v2.7.0.yaml

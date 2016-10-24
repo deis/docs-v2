@@ -41,16 +41,16 @@ the master returned by `helmc target` matches the expected cluster.
 ## Choose Your Deployment Strategy
 
 Deis Workflow includes everything it needs to run out of the box. However, these defaults are aimed at simplicity rather than
-production readiness. Production and staging deployments of Workflow should, at a minimum, use off-cluster storage.
-Which is used by Workflow components to store and backup critical data. Should an operator need to completely re-install
+production readiness. Production and staging deployments of Workflow should, at a minimum, use off-cluster storage
+which is used by Workflow components to store and backup critical data. Should an operator need to completely re-install
 Workflow, the required components can recover from off-cluster storage. See the documentation for [configuring object
 storage](configuring-object-storage.md) for more details.
 
-Workflow may also be configured to use off-cluster persistence for [Postgres](configuring-postgres.md) and
-Redis; a deployment strategy that mirrors the "stateless" clusters from the Deis v1 PaaS.
-
-Last but not least, Workflow may also use a dedicated off-cluster image registry, including Docker Hub, Quay.io, ECR or
-GCR for all container images. Read more about [configuring your registry](configuring-registry.md).
+More rigorous installations would benefit from using outside sources for the following things:
+* [Postgres](configuring-postgres.md) - For example AWS RDS.
+* [Registry](configuring-registry.md) - This includes [quay.io](https://quay.io), [dockerhub](https://hub.docker.com), [Amazon ECR](https://aws.amazon.com/ecr/), and [Google GCR](https://cloud.google.com/container-registry/).
+* [Redis](../managing-workflow/platform-logging.md#configuring-off-cluster-redis) - Such as AWS Elasticache
+* [InfluxDB](../managing-workflow/platform-monitoring.md#configuring-off-cluster-influxdb) and [Grafana](../managing-workflow/platform-monitoring.md#off-cluster-grafana)
 
 ## Add the Deis Chart Repository
 
@@ -74,6 +74,14 @@ $ helmc generate -x manifests workflow-v2.7.0 # generates various secrets
 $ helmc install workflow-v2.7.0               # injects resources into
                                               # your cluster
 ```
+
+!!! Experimental
+	Workflow can also be installed now using the [Kubernetes Helm][helm]. All the details that are needed for a production deployments like off-cluster storage, external registry etc., can be configured by passing an optional [values file][valuesfile] which overrides default values.
+
+
+    	$ helm repo add deis https://charts.deis.com/workflow  # add the workflow charts repo
+
+    	$ helm install deis/workflow --version=v2.7.0 --namespace=deis -f <optional values file>  # injects resources into your cluster
 
 Helm Classic will install a variety of Kubernetes resources in the `deis` namespace.
 Wait for the pods that Helm Classic launched to be ready. Monitor their status by running:
@@ -114,3 +122,5 @@ Once all of the pods are in the `READY` state, Deis Workflow is up and running!
 After installing Workflow, [register a user and deploy an application](../quickstart/deploy-an-app.md).
 
 [Kubernetes v1.2 or v1.3.4+]: system-requirements.md#kubernetes-versions
+[helm]: https://github.com/kubernetes/helm/blob/master/docs/install.md
+[valuesfile]: https://charts.deis.com/workflow/values-v2.7.0.yaml
