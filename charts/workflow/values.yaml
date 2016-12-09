@@ -113,22 +113,20 @@ controller:
   # admin_only - allows for registration by an admin only.
   registration_mode: "enabled"
 
-database:
-  # Configure the following ONLY if using an off-cluster PostgreSQL database
-  postgres:
-    name: "database name"
-    username: "database username"
-    password: "database password"
-    host: "database host"
-    port: "database port"
+# Configure the following ONLY if using an off-cluster PostgreSQL database
+postgres:
+  name: "database name"
+  username: "database username"
+  password: "database password"
+  host: "database host"
+  port: "database port"
 
-logger:
-  redis:
-    # Configure the following ONLY if using an off-cluster Redis instance for logger
-    db: "0"
-    host: "redis host"
-    port: "redis port"
-    password: "redis password" # "" == no password
+redis:
+  # Configure the following ONLY if using an off-cluster Redis instance for logger
+  db: "0"
+  host: "redis host"
+  port: "redis port"
+  password: "redis password" # "" == no password
 
 monitor:
   grafana:
