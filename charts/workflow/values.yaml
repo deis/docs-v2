@@ -54,9 +54,9 @@ global:
 
 
 s3:
-  # Your AWS access key. Leave it empty if you want to use IAM credentials.
+  # Your AWS access key.
   accesskey: ""
-  # Your AWS secret key. Leave it empty if you want to use IAM credentials.
+  # Your AWS secret key.
   secretkey: ""
   # Any S3 region
   region: "us-west-1"
@@ -154,9 +154,9 @@ registry-token-refresher:
     username: ""
     password: ""
   ecr:
-    # Your AWS access key. Leave it empty if you want to use IAM credentials.
+    # Your AWS access key.
     accesskey: ""
-    # Your AWS secret key. Leave it empty if you want to use IAM credentials.
+    # Your AWS secret key.
     secretkey: ""
     # Any S3 region
     region: "us-west-2"
