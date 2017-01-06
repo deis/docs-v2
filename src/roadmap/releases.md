@@ -137,7 +137,7 @@ verify it can be fetched (and verified):
 $ helm repo add controller https://charts.deis.com/controller
 "controller" has been added to your repositories
 $ helm fetch --verify controller/controller --version v2.10.0
-Verification: &{0xc420615c70 sha256:144c5172f111b49909a35bbf0c606dcc7821d0fb953d2ba9d729af25fdb39b1b controller-v2.10.0.tgz}
+Verification: &{0xc4207e8c30 sha256:27816760c37880baabcde0e7975f8f857be10e5c1e774e9931bba45960dae8ee controller-v2.10.0.tgz}
 ```
 
 ## How to Release Workflow
