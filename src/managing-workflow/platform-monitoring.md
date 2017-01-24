@@ -122,9 +122,9 @@ Kubernetes v1.4.x has introduced Dynamic Provisioning and Storage Classes, you c
 
 To use persistence for Grafana and InfluxDB you also need to deploy StorageClass objects to the Kubernetes cluster with `kubectl create -f storage-standard.yaml`.
 
-Note: AWS and GCE/GKE have different `StorageClass` settings.
+Note: GCE/GKE and AWS have different `StorageClass` settings.
 
-AWS `storage-standard.yaml` manifest:
+GCE/GKE `storage-standard.yaml` manifest:
 
 ```
 kind: StorageClass
@@ -137,7 +137,7 @@ parameters:
 ```
 
 
-GCE/GKE `storage-standard.yaml` manifest:
+AWS `storage-standard.yaml` manifest:
 
 ```
 kind: StorageClass
