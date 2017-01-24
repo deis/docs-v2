@@ -52,18 +52,20 @@ Grafana will preload several dashboards to help operators get started with monit
 These dashboards are meant as starting points and don't include every item that might be desirable to monitor in a
 production installation.
 
-Deis Workflow monitoring by default does not write data to the host filesystem or to long-term storage. If the Grafana instance fails, modified dashboards are lost. 
+Deis Workflow monitoring by default does not write data to the host filesystem or to long-term storage. If the Grafana instance fails, modified dashboards are lost.
 
 ### On Cluster Persistence
 
 If you wish to have persistence for Grafana you can set `enabled` to `true` in the `values.yaml` file before running `helm install`.
 
-* ` grafana:`
-* `   # Configure the following ONLY if you want persistence for on-cluster grafana`
-* `   # GCP PDs and EBS volumes are supported only`
-* `   persistence:`
-* `     enabled: true # Set to true to enable persistence`
-* `     size: 5Gi # PVC size`
+```
+ grafana:
+   # Configure the following ONLY if you want persistence for on-cluster grafana
+   # GCP PDs and EBS volumes are supported only
+   persistence:
+     enabled: true # Set to true to enable persistence
+     size: 5Gi # PVC size
+```
 
 You have to set (if you do not have it already) `standard` StorageClass as per [PVC Dynamic Provisioning](#pvc-dynamic-provisioning), as it does not get set by default in Kubernetes v1.4.x and v1.5.x.
 
@@ -75,7 +77,7 @@ If you wish to provide your own Grafana instance you can set `grafana_location` 
 ## InfluxDB
 
 InfluxDB writes data to the host disk, however, if the InfluxDB pod dies and comes back on
-another host the data will not be recovered, you need to enable on-cluster persistence for data to persist. The InfluxDB Admin UI is also
+another host, the data will not be recovered you need to enable on-cluster persistence for data to persist. The InfluxDB Admin UI is also
 exposed through the router allowing users to access the query engine by going to `influx.mydomain.com`. You will need to
 configure where to find the `influx-api` endpoint by clicking the "gear" icon at the top right and changing the host to
 `influxapi.mydomain.com` and port to `80`.
@@ -91,12 +93,14 @@ following line - `router.deis.io/routable: "true"`.
 
 If you wish to have persistence for InfluxDB you can set `enabled` to `true` in the `values.yaml` file before running `helm install`.
 
-* ` influxdb:`
-* `   # Configure the following ONLY if you want persistence for on-cluster grafana`
-* `   # GCP PDs and EBS volumes are supported only`
-* `   persistence:`
-* `     enabled: true # Set to true to enable persistence`
-* `     size: 5Gi # PVC size`
+```
+ influxdb:
+   # Configure the following ONLY if you want persistence for on-cluster grafana
+   # GCP PDs and EBS volumes are supported only
+   persistence:
+     enabled: true # Set to true to enable persistence
+     size: 5Gi # PVC size
+```
 
 You have to set (if you do not have it already) `standard` StorageClass as per [PVC Dynamic Provisioning](#pvc-dynamic-provisioning), as it does not get set by default in Kubernetes v1.4.x and v1.5.x.
 
