@@ -52,8 +52,8 @@ You can verify your client configuration by running `deis whoami`.
 ## Registering New Users
 
 By default, new users are not allowed to register after an initial user does. That initial user
-becomes the first "admin" user. Others will now receive an error when trying to register, but the
-logged-in an admin user can register new users:
+becomes the first "admin" user. Others will now receive an error when trying to register, but when
+logged in, an admin user can register new users:
 
 ```shell
 $ deis register --login=false --username=newuser --password=changeme123 --email=newuser@deis.io
