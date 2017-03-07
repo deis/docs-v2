@@ -28,6 +28,11 @@ Now that Helm is installed and the repository has been added, install Workflow b
 $ helm install deis/workflow --namespace deis
 ```
 
+!!! important
+	if you're on Minikube or Vagrant, use
+	`helm install deis/workflow --namespace deis --set router.host_port.enabled=true` to allow the
+	router to bind to a host port.
+
 Helm will install a variety of Kubernetes resources in the `deis` namespace.
 Wait for the pods that Helm launched to be ready. Monitor their status by running:
 
