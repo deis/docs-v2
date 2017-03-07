@@ -26,9 +26,7 @@ See [Configuring Object Storage][] for details on removing this operational comp
 
 ## Review Security Considerations
 
-There are some additional security-related considerations when running Workflow in production, and
-users can consider enabling a firewall on the CoreOS hosts as well as the router component.
-
+There are some additional security-related considerations when running Workflow in production.
 See [Security Considerations][] for details.
 
 
