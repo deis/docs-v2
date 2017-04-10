@@ -80,3 +80,8 @@ The Deis scheduler client is implemented in the Controller component.
 ## Service
 
 A Kubernetes Service is an abstraction which defines a logical set of Pods and a policy by which to access them. In Workflow, a Service is used to load-balance an application's [Containers](#containers) internally through a virtual IP address.
+
+
+## Service Broker
+
+A service broker is an endpoint that manages a set of plans (tiers) for a given service, such as MySQL, Postgres or Logstash.

@@ -44,6 +44,7 @@ pages:
     - SSH Keys: users/ssh-keys.md
   - Applications:
     - Deploying Apps: applications/deploying-apps.md
+    - Deploying Add-ons: applications/deploying-addons.md
     - Buildpacks: applications/using-buildpacks.md
     - Dockerfiles: applications/using-dockerfiles.md
     - Docker Images: applications/using-docker-images.md
