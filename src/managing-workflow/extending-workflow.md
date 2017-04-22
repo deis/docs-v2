@@ -28,6 +28,7 @@ use with caution in a production environment.
 - [heroku-to-deis][] migrates existing Heroku applications to the Workflow platform.
 - [kube-solo-osx][] creates a zero-to-Kubernetes development environment for macOS in under
   two minutes, with specific support for installing Workflow with [Helm][] or Helm Classic.
+- [terraform-provider-deis][] is a Terraform plugin to manage Deis applications.
 
 Are we missing something? Please open a [documentation pull request][] to add it.
 
@@ -47,3 +48,4 @@ Are we missing something? Please open a [documentation pull request][] to add it
 [heroku-to-deis]: https://github.com/emartech/heroku-to-deis
 [kube-solo-osx]: https://github.com/TheNewNormal/kube-solo-osx
 [Vault]: https://www.vaultproject.io/
+[terraform-provider-deis]: https://github.com/botlink/terraform-provider-deis
