@@ -28,7 +28,7 @@ The first user to register against Deis Workflow will automatically be given adm
 Use the controller `$hostname` to register a user in the cluster.
 
 ```
-$ deis register http://$hostname
+$ deis register http://deis.$hostname
 username: admin
 password:
 password (confirm):
