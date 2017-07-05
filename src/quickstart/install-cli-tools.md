@@ -29,6 +29,9 @@ Check your work by running `deis version`:
 We will install Deis Workflow using Helm which is a tool for installing and managing software in a
 Kubernetes cluster.
 
+!!! note
+    The Worklow charts have a hard requirement on running `helm` v2.2.1 or later.
+
 Install the latest `helm` cli for Linux or Mac OS X by following the
 [installation instructions][helm-install].
 
