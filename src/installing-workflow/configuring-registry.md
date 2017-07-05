@@ -23,7 +23,7 @@ Deis Workflow currently supports:
 
 ## Configuration
 
-  1. If you haven't already fetched the values file, do so with `helm inspect values deis/workflow | sed -n '1!p' > values.yaml`
+  1. If you haven't already fetched the values file, do so with `helm inspect values deis/workflow > values.yaml`
   1. Update registry location details by modifying the values file:
     * Update the `registry_location` parameter to reference the registry location you are using: `off-cluster`, `ecr`, `gcr`
     * Update the values in the section which corresponds to your registry location type.
@@ -76,6 +76,27 @@ registry-token-refresher:
 ```
 
 **Note:** `hostname` should be left empty.
+
+### [Azure Container Registry](https://azure.microsoft.com/en-us/services/container-registry/) (ACR)
+
+After following the [docs](https://docs.microsoft.com/en-us/azure/container-registry/container-registry-get-started-azure-cli) and creating a registry, e.g. `myregistry`, with its corresponding login server of `myregistry.azurecr.io`, the following values should be supplied:
+
+```
+global:
+...
+  registry_location: "off-cluster"
+...
+registry-token-refresher:
+...
+  off_cluster_registry:
+    hostname: "myregistry.azurecr.io"
+    organization: "myorg"
+    username: "myusername"
+    password: "mypassword"
+...
+```
+
+**Note:** The mandatory organization field (here `myorg`) will be created as an ACR repository if it does not already exist.
 
 ### Quay.io
 
