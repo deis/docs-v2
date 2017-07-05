@@ -16,7 +16,7 @@ Fortunately, most modern applications feature a stateless application tier that 
 ## Login to the Controller
 
 !!! important
-	if you haven't yet, now is a good time to [install the client][install client] and [register](../users/registration.md).
+  if you haven't yet, now is a good time to [install the client][install client] and [register](../users/registration.md).
 
 Before deploying an application, users must first authenticate against the Deis [Controller][]
 using the URL supplied by their Deis administrator.
@@ -63,9 +63,49 @@ Setting                                         | Description
 DEIS_DISABLE_CACHE                              | if set, this will disable the [slugbuilder cache][] (default: not set)
 DEIS_DEPLOY_BATCHES                             | the number of pods to bring up and take down sequentially during a scale (default: number of available nodes)
 DEIS_DEPLOY_TIMEOUT                             | deploy timeout in seconds per deploy batch (default: 120)
+DEIS_DEPLOY_NOW                                 | if set to false, this will disable synchronous deployment (default: not set)
 IMAGE_PULL_POLICY                               | the kubernetes [image pull policy][pull-policy] for application images (default: "IfNotPresent") (allowed values: "Always", "IfNotPresent")
 KUBERNETES_DEPLOYMENTS_REVISION_HISTORY_LIMIT   | how many [revisions][kubernetes-deployment-revision] Kubernetes keeps around of a given Deployment (default: all revisions)
 KUBERNETES_POD_TERMINATION_GRACE_PERIOD_SECONDS | how many seconds kubernetes waits for a pod to finish work after a SIGTERM before sending SIGKILL (default: 30)
+
+### Asynchronous Deployment
+
+By default, `git push` and `deis pull` will create a build, a release and proceed to the deployment.
+Starting v2.13 version, it's possible to skip the deployment and trigger the deployment of a release later on.
+
+#### Disabling Synchronous Deployment
+
+There are two ways to disable the synchronous deployment:
+
+- Using the command line:
+  - The first one which applies for `git push` and `deis pull` is to set `DEIS_DEPLOY_NOW` to `false` in your application settings.
+    - Example
+    ```bash
+    $ deis config:set DEIS_DEPLOY_NOW=false -a <app>
+    ```
+  - The second one which only applies for `deis pull`, is to pass `--deploy-now false` option to the `deis pull` command.
+    - Example
+    ```bash
+    $ deis pull deis/example-go -a <app> --deploy-now false
+    ```
+- Using the API:
+  - Using the [API](https://deis.com/docs/workflow/reference-guide/controller-api/v2.3/#create-application-build) and passing the `deploy_now: false` parameter.
+
+Note: `DEIS_DEPLOY_NOW` takes precedence over the `--deploy-now` option.
+
+#### Deploying A Release Manually
+
+Deploying a release manually is possible:
+
+- Using the command line with `deis deploy <release-version>`.
+  - Example
+  ```bash
+  $ deis releases -a <app>
+  === <app> Releases
+  v1	2017-03-31T17:18:43Z	<user> created initial release
+  $ deis deploy v1 -a <app>
+  ```
+- Using the [API](https://deis.com/docs/workflow/reference-guide/controller-api/v2.3/#deploy-release).
 
 ### Deploy Timeout
 
