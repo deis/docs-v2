@@ -35,9 +35,9 @@ something-random.192.168.99.100.nip.io has address 192.168.99.100
 
 ### Using DNSMasq
 
-If you `nip.io` is working for you, you can skip this section, and proceed to verify the hostname.
+If `nip.io` is working for you, skip this section and proceed to verify the hostname.
 
-If you prefer not to use `nip.io` or cannot (because your DNS provider might have blocked it), you can use `dnsmasq` on Linux and macOS or `Acrylic` on Windows.
+If you prefer not to use `nip.io` or cannot (because your DNS provider might have blocked it), you can use `dnsmasq` on Linux and macOS or `Acrylic` on Windows. You may need to ensure that the `dnsmasq` service at 127.0.0.1 is listed as a DNS server for your network connection.
 
 You can install and configure `dnsmasq` on macOS with [Homebrew](https://brew.sh) with the following commands:
 
