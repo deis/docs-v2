@@ -9,6 +9,7 @@ global:
   # - gcs: Store persistent data in Google Cloud Storage
   # - minio: Store persistent data on in-cluster Minio server
   storage: minio
+  off_cluster_minio: true
 
   # Set the location of Workflow's PostgreSQL database
   #
