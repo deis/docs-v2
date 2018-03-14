@@ -42,7 +42,7 @@ After the cluster is created, check the node version. See [Kubernetes Versions](
 
 ## Install and configure the Google Cloud CLI
 
-While your container cluster is booting. You will need to install the Google Cloud CLI tools. We will use the tools to fetch cluster credentials to authenitcate to your new Kubernetes cluster.
+While your container cluster is booting. You will need to install the Google Cloud CLI tools. We will use the tools to fetch cluster credentials to authenticate to your new Kubernetes cluster.
 
 Google maintains a number of [quickstart guides](https://cloud.google.com/sdk/docs/) which walk you through the installation.
 
@@ -109,7 +109,7 @@ You'll need to run:
 
     $ gcloud container clusters get-credentials
 
-To download the credentials necessary. The `kubectl cluster-info` command should then work as intended.
+to download the credentials necessary. The `kubectl cluster-info` command should then work as intended.
 
 You are now ready to [install Deis Workflow](install-gke.md)
 
